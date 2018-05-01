@@ -32,5 +32,17 @@ namespace Assessment.Web.Controllers
 
             return boards.Find(id);
         }
+        
+        [HttpPost]
+        public IEnumerable<Board> AddBoard([FromBody]string value)
+        {
+            return boards.AddBoard(value);
+        }
+
+        [HttpDelete("{boardId}")]
+        public IEnumerable<Board> DeleteBoard(int boardId)
+        {
+            return boards.DeleteBoard(boardId);
+        }
     }
 }
