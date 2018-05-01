@@ -49,42 +49,28 @@ This should run without anything other than Visual Studio or IIS.
 ## Target Deliverables 
 
 1. Add a collection of "post-its" to the `Board` class
-2. Add the following Web API endpoints
-
-  - `POST /boards`
-
-  creates a new board and returns at least the new id
-
-  - `DELETE /boards/[board-id]`
-
-  deletes an existing board and all related pins
-
-  - `GET /boards/[board-id]/post-its/`
-
-  gets all the pins attached to an existing board
-
-  - `POST /boards/[board-id]/post-its/`
-
-  adds a pin to an existing board
-
-  - `DELETE /boards/[board-id]/post-its/[post-it-id]`
-
-  removes a pin from a board
-
-3. Relevant unit tests for server-side code
-
-  - Code coverage - `95%`
+2. Add the features outlined in the __Features__ section below
+  - These features should be developed in the order outlined below
+  - Add (or update) the Web API controller(s) and include the minimal UI required to facilitate use of the API
+      - The expected API URL path and HTTP method are specified with the features below
+3. Unit tests for all server-side code added/modified
+    - Code coverage target - `90%`
       - For all logic areas added
-      - Code already existing in the repository will not count against you
- 
-4. Update the front-end to use the new API endpoints
+      - The current code in the repository is not considered in determining the coverage. Only code and tests you add will be reviewed.
 
-  - Create a new board
-  - Delete a board
-  
-  - List all "post-its" for a board
-  - Add a "post-it" to an existing board
-  - Delete a "post-it"
+### Features
+
+The following features need to be added to the application to make it useful for users.
+
+1. Create a new board - `POST /boards`
+2. Delete an existing board - `DELETE /boards/[board-id]`
+3. Add a pin to a board - `POST /boards/[board-id]/post-its/`
+4. View pins attached to a board - `GET /boards/[board-id]/post-its/`
+5. Delete a pin - `DELETE /boards/[board-id]/post-its/[post-it-id]`
+6. Delete a board and all pins - `DELETE /boards/[board-id]`
+
+Complete what you can in the time frame allotted for the assessment - __1 Hour__.
+You will not be judged on the amount of code completed, only on its quality and ability to meet the requirements outlined.
 
 ## Tech Stack
 
