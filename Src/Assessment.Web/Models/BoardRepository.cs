@@ -13,6 +13,8 @@ namespace Assessment.Web.Models
         Board Find(int id);
         bool Add(Board board);
         bool Delete(Board board);
+        IQueryable<Board> AddBoard(string value);
+        IQueryable<Board> DeleteBoard(int boardId);
     }
 
     public class BoardRepository : IBoardRepository
@@ -36,7 +38,7 @@ namespace Assessment.Web.Models
 
         public IQueryable<Board> GetAll()
         {
-            return boards.AsQueryable();
+            return GetBoardsFromFile().AsQueryable();
         }
 
         public Board Find(int id)
@@ -57,6 +59,52 @@ namespace Assessment.Web.Models
         {
             if (Find(board.Id) == null) return false;
             return boards.Remove(board);
+        }
+        
+        public IQueryable<Board> AddBoard(string value)
+        {
+            try
+            {
+                List<Board> data = GetBoardsFromFile();
+                int newId = data.Max(x => x.Id);
+                Board board = new Board();
+                board.Id = ++newId;
+                board.Name = value;
+                board.CreatedAt = DateTime.Now;
+                data.Add(board);
+                var filePath = Application.Configuration["DataFile"];
+                if (!Path.IsPathRooted(filePath)) filePath = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+                var output = JsonConvert.SerializeObject(data);
+                File.WriteAllText(filePath, output);
+                return GetBoardsFromFile().AsQueryable();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public IQueryable<Board> DeleteBoard(int boardId)
+        {
+            try
+            {
+                var filePath = Application.Configuration["DataFile"];
+                if (!Path.IsPathRooted(filePath)) filePath = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+                var json = File.ReadAllText(filePath);
+                var data = JsonConvert.DeserializeObject<List<Board>>(json);
+                if (boardId > 0)
+                {
+                    var boardToDeleted = data.FirstOrDefault(obj => obj.Id == boardId);
+                    data.Remove(boardToDeleted);
+                    var output = JsonConvert.SerializeObject(data);
+                    File.WriteAllText(filePath, output);
+                }
+                return GetBoardsFromFile().AsQueryable();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
