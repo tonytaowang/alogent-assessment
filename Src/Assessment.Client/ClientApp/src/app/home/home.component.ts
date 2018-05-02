@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Board } from '../models/board';
 import { PostIt } from '../models/post-it';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -17,4 +17,21 @@ export class HomeComponent implements OnInit {
       this.boards = data;
     });
   }
+  
+  addBoard(board: string) {
+    debugger;
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<Board[]>('/api/boards', JSON.stringify(board), { headers: headers }).subscribe(data => {
+      this.boards = data;
+    });
+  }
+
+  deleteBoard(boardId: number) {
+    debugger;
+    return this.http.delete<Board[]>('/api/boards/' + boardId)
+      .subscribe(data => {
+        this.boards = data;
+      });
+  }
+  
 }
