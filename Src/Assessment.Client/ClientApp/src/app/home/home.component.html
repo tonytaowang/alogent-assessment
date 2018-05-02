@@ -1,8 +1,12 @@
-
+<div class="form-group">
+  <label for="name">Board Name</label>
+  <input type="text" id="name" required [(ngModel)]="value">
+  <button title="Add" class="btn btn-success" (click)="addBoard(value)">Add</button>
+</div>
 <div class="col-sm-4" *ngFor="let board of boards">
   <div class="card">
     <h3 class="card-header">
-      {{ board.name }}
+      {{ board.name }} #{{ board.id }}
     </h3>
     <div class="card-body">
       <b>Posts</b>
@@ -13,5 +17,6 @@
     <div class="card-footer text-muted">
       <small>Created {{ board.createdAt | date:short }}</small>
     </div>
+    <button title="Delete" class="btn btn-danger" (click)="deleteBoard(board.id)">Delete</button>
   </div>
 </div>
