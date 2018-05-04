@@ -10,5 +10,7 @@ namespace Assessment.Web.Models
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Name { get; set; }
+
+        public List<PostIt> PostIt { get; set; }
     }
 }
