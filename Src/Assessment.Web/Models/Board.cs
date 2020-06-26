@@ -1,5 +1,8 @@
-﻿using System;
+﻿
+using Microsoft.WindowsAzure.Storage.Blob.Protocol;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,5 +13,6 @@ namespace Assessment.Web.Models
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Name { get; set; }
+        public ICollection<PostIt> PostIts { get; set; }
     }
 }

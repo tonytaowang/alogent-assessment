@@ -62,5 +62,32 @@ namespace Assessment.Web.Tests
 
             boardRepo.Verify(x => x.Find(1), Times.Once);
         }
+
+        [Test]
+        public void Add_Board()
+        {
+            var boardRepo = new Mock<IBoardRepository>();
+            boardRepo.Setup(x => x.Add(It.IsAny<Board>())).Returns(true);
+            var controller = new BoardsController(boardRepo.Object);
+            var board = new Board();
+            board.Id =4;
+            board.Name = "UnitTest";
+            controller.Add(board);
+
+            boardRepo.Verify(x => x.Add(board), Times.Once);
+        }
+
+        [Test]
+        public void Delete_NoExist()
+        {
+            var boardRepo = new Mock<IBoardRepository>();
+            boardRepo.Setup(x => x.Delete(It.IsAny<Board>())).Returns(true);
+            var controller = new BoardsController(boardRepo.Object);
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                controller.Delete(0);
+            });
+        }
     }
 }
